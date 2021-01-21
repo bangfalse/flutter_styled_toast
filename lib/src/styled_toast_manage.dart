@@ -48,12 +48,9 @@ class ToastFuture {
 class ToastManager {
   ToastManager._();
 
-  static ToastManager? _instance;
+  static late final ToastManager _instance = ToastManager._();
 
-  factory ToastManager() {
-    _instance ??= ToastManager._();
-    return _instance!;
-  }
+  factory ToastManager() => _instance;
 
   Set<ToastFuture> toastSet = Set();
 
