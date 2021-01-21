@@ -454,7 +454,7 @@ class _StyledToastState extends State<StyledToast> {
 ///
 class _StyledToastWidget extends StatefulWidget {
   ///Child widget
-  final Widget child;
+  final Widget/*!*/ child;
 
   ///Toast duration
   final Duration duration;
@@ -463,19 +463,19 @@ class _StyledToastWidget extends StatefulWidget {
   final Duration animDuration;
 
   ///Animation curve
-  final Curve curve;
+  final Curve/*!*/ curve;
 
   ///Animation reverse curve
-  final Curve reverseCurve;
+  final Curve/*!*/ reverseCurve;
 
   ///Toast position
-  final StyledToastPosition position;
+  final StyledToastPosition/*!*/ position;
 
   ///Alignment of animation, scale, rotate animation.
-  final AlignmentGeometry alignment;
+  final Alignment/*!*/ alignment;
 
   ///Axis of animation, like size animation
-  final Axis axis;
+  final Axis/*!*/ axis;
 
   ///Start offset of slide animation
   final Offset startOffset;
@@ -490,13 +490,13 @@ class _StyledToastWidget extends StatefulWidget {
   final Offset reverseEndOffset;
 
   ///Toast animation
-  final StyledToastAnimation animation;
+  final StyledToastAnimation/*!*/ animation;
 
   ///Toast reverse animation
   final StyledToastAnimation reverseAnimation;
 
   ///When window change, moving toast.
-  final bool movingOnWindowChange;
+  final bool/*!*/ movingOnWindowChange;
 
   _StyledToastWidget({
     Key key,
@@ -528,10 +528,10 @@ class _StyledToastWidget extends StatefulWidget {
 class StyledToastWidgetState extends State<_StyledToastWidget>
     with TickerProviderStateMixin<_StyledToastWidget>, WidgetsBindingObserver {
   ///Animation controller
-  AnimationController _animationController;
+  /*late*/ AnimationController _animationController;
 
   ///Reverse animation controller
-  AnimationController _reverseAnimController;
+  /*late*/ AnimationController _reverseAnimController;
 
   ///Fade animation
   Animation<double> fadeAnim;
@@ -597,7 +597,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
 
   /// A [Timer] needed to dismiss the toast with animation
   /// after the given [duration] of time.
-  Timer _toastTimer;
+  /*late*/ Timer _toastTimer;
 
   @override
   void initState() {
@@ -612,7 +612,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
       dismissToastAnim();
     });
 
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
   }
 
   ///Init animation
@@ -1213,7 +1213,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   }
 
   ///Create animation widget
-  Widget createAnimWidget(Widget w) {
+  Widget/*!*/ createAnimWidget(Widget/*!*/ w) {
     switch (widget.animation) {
       case StyledToastAnimation.fade:
         w = FadeTransition(
@@ -1305,7 +1305,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
       case StyledToastAnimation.scale:
         w = ScaleTransition(
           scale: scaleAnim,
-          alignment: widget.alignment ?? Alignment.center,
+          alignment: widget.alignment,
           child: w,
         );
         break;
@@ -1314,7 +1314,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
           opacity: fadeAnim,
           child: ScaleTransition(
             scale: scaleAnim,
-            alignment: widget.alignment ?? Alignment.center,
+            alignment: widget.alignment,
             child: w,
           ),
         );
@@ -1322,7 +1322,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
       case StyledToastAnimation.rotate:
         w = RotationTransition(
           turns: rotateAnim,
-          alignment: widget.alignment ?? FractionalOffset.center,
+          alignment: widget.alignment,
           child: w,
         );
         break;
@@ -1331,7 +1331,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
           opacity: fadeAnim,
           child: RotationTransition(
             turns: rotateAnim,
-            alignment: widget.alignment ?? FractionalOffset.center,
+            alignment: widget.alignment,
             child: w,
           ),
         );
@@ -1339,10 +1339,10 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
       case StyledToastAnimation.scaleRotate:
         w = ScaleTransition(
           scale: scaleAnim,
-          alignment: widget.alignment ?? Alignment.center,
+          alignment: widget.alignment,
           child: RotationTransition(
             turns: rotateAnim,
-            alignment: widget.alignment ?? FractionalOffset.center,
+            alignment: widget.alignment,
             child: w,
           ),
         );
@@ -1451,7 +1451,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
         case StyledToastAnimation.scale:
           w = ScaleTransition(
             scale: scaleAnimReverse,
-            alignment: widget.alignment ?? Alignment.center,
+            alignment: widget.alignment,
             child: w,
           );
           break;
@@ -1460,7 +1460,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
             opacity: fadeAnimReverse,
             child: ScaleTransition(
               scale: scaleAnimReverse,
-              alignment: widget.alignment ?? Alignment.center,
+              alignment: widget.alignment,
               child: w,
             ),
           );
@@ -1468,7 +1468,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
         case StyledToastAnimation.rotate:
           w = RotationTransition(
             turns: rotateAnimReverse,
-            alignment: widget.alignment ?? FractionalOffset.center,
+            alignment: widget.alignment,
             child: w,
           );
           break;
@@ -1477,7 +1477,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
             opacity: fadeAnimReverse,
             child: RotationTransition(
               turns: rotateAnimReverse,
-              alignment: widget.alignment ?? FractionalOffset.center,
+              alignment: widget.alignment,
               child: w,
             ),
           );
@@ -1487,7 +1487,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
             scale: scaleAnimReverse,
             child: RotationTransition(
               turns: rotateAnimReverse,
-              alignment: widget.alignment ?? FractionalOffset.center,
+              alignment: widget.alignment,
               child: w,
             ),
           );
@@ -1529,7 +1529,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   @override
   void dispose() {
     _toastTimer?.cancel();
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance?.removeObserver(this);
     if (_animationController != null) {
       _animationController.dispose();
     }
@@ -1543,47 +1543,5 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   void didChangeMetrics() {
     super.didChangeMetrics();
     if (this.mounted) setState(() {});
-  }
-
-  @override
-  void didChangeAccessibilityFeatures() {
-    // TODO: implement didChangeAccessibilityFeatures
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // TODO: implement didChangeAppLifecycleState
-  }
-
-  @override
-  void didChangeLocales(List<Locale> locale) {
-    // TODO: implement didChangeLocales
-  }
-
-  @override
-  void didChangePlatformBrightness() {
-    // TODO: implement didChangePlatformBrightness
-  }
-
-  @override
-  void didChangeTextScaleFactor() {
-    // TODO: implement didChangeTextScaleFactor
-  }
-
-  @override
-  void didHaveMemoryPressure() {
-    // TODO: implement didHaveMemoryPressure
-  }
-
-  @override
-  Future<bool> didPopRoute() {
-    // TODO: implement didPopRoute
-    return null;
-  }
-
-  @override
-  Future<bool> didPushRoute(String route) {
-    // TODO: implement didPushRoute
-    return null;
   }
 }
