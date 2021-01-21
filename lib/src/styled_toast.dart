@@ -213,7 +213,6 @@ ToastFuture showToastWidget(
     );
   });
 
-
   if (dismissOtherToast == true) {
     ToastManager().dismissAll();
   }
