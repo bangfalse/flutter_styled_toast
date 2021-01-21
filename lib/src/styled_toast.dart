@@ -9,7 +9,7 @@ import 'package:flutter_styled_toast/src/styled_toast_manage.dart';
 import 'package:flutter_styled_toast/src/styled_toast_theme.dart';
 
 ///Current context of the page which uses the toast
-BuildContext currentContext;
+BuildContext? currentContext;
 
 ///Default toast duration
 const _defaultDuration = Duration(
@@ -30,37 +30,37 @@ const double _defaultHorizontalMargin = 50.0;
 /// When you wrap your app with StyledToast, [context] is optional;
 ToastFuture showToast(
   String msg, {
-  BuildContext context,
-  Duration duration,
-  Duration animDuration,
-  StyledToastPosition position,
-  TextStyle textStyle,
-  EdgeInsetsGeometry textPadding,
+  BuildContext? context,
+  Duration? duration,
+  Duration? animDuration,
+  StyledToastPosition? position,
+  TextStyle? textStyle,
+  EdgeInsetsGeometry? textPadding,
   double toastHorizontalMargin = _defaultHorizontalMargin,
-  Color backgroundColor,
-  BorderRadius borderRadius,
-  ShapeBorder shapeBorder,
-  VoidCallback onDismiss,
-  TextDirection textDirection,
-  bool dismissOtherToast,
-  bool movingOnWindowChange,
-  StyledToastAnimation animation,
-  StyledToastAnimation reverseAnimation,
-  AlignmentGeometry alignment,
-  Axis axis,
-  Offset startOffset,
-  Offset endOffset,
-  Offset reverseStartOffset,
-  Offset reverseEndOffset,
-  TextAlign textAlign,
-  Curve curve,
-  Curve reverseCurve,
-  bool fullWidth,
+  Color? backgroundColor,
+  BorderRadius? borderRadius,
+  ShapeBorder? shapeBorder,
+  VoidCallback? onDismiss,
+  TextDirection? textDirection,
+  bool? dismissOtherToast,
+  bool? movingOnWindowChange,
+  StyledToastAnimation? animation,
+  StyledToastAnimation? reverseAnimation,
+  AlignmentGeometry? alignment,
+  Axis? axis,
+  Offset? startOffset,
+  Offset? endOffset,
+  Offset? reverseStartOffset,
+  Offset? reverseEndOffset,
+  TextAlign? textAlign,
+  Curve? curve,
+  Curve? reverseCurve,
+  bool? fullWidth,
 }) {
   context = context != null ? context : currentContext;
   assert(context != null);
 
-  StyledToastTheme _toastTheme = StyledToastTheme.of(context);
+  StyledToastTheme? _toastTheme = StyledToastTheme.of(context!);
 
   position ??= _toastTheme?.toastPositions ?? StyledToastPosition.bottom;
 
@@ -127,31 +127,31 @@ ToastFuture showToast(
 /// Show custom content widget toast
 ToastFuture showToastWidget(
   Widget widget, {
-  BuildContext context,
-  Duration duration,
-  Duration animDuration,
-  VoidCallback onDismiss,
-  bool dismissOtherToast,
-  bool movingOnWindowChange,
-  TextDirection textDirection,
-  AlignmentGeometry alignment,
-  Axis axis,
-  Offset startOffset,
-  Offset endOffset,
-  Offset reverseStartOffset,
-  Offset reverseEndOffset,
-  StyledToastPosition position,
-  StyledToastAnimation animation,
-  StyledToastAnimation reverseAnimation,
-  Curve curve,
-  Curve reverseCurve,
+  BuildContext? context,
+  Duration? duration,
+  Duration? animDuration,
+  VoidCallback? onDismiss,
+  bool? dismissOtherToast,
+  bool? movingOnWindowChange,
+  TextDirection? textDirection,
+  AlignmentGeometry? alignment,
+  Axis? axis,
+  Offset? startOffset,
+  Offset? endOffset,
+  Offset? reverseStartOffset,
+  Offset? reverseEndOffset,
+  StyledToastPosition? position,
+  StyledToastAnimation? animation,
+  StyledToastAnimation? reverseAnimation,
+  Curve? curve,
+  Curve? reverseCurve,
 }) {
   OverlayEntry entry;
   ToastFuture future;
 
   context = context != null ? context : currentContext;
   assert(context != null);
-  StyledToastTheme _toastTheme = StyledToastTheme.of(context);
+  StyledToastTheme? _toastTheme = StyledToastTheme.of(context!);
   duration ??= _toastTheme?.duration ?? _defaultDuration;
   animDuration ??= _toastTheme?.animDuration ?? animationDuration;
 
@@ -187,23 +187,23 @@ ToastFuture showToastWidget(
   entry = OverlayEntry(builder: (ctx) {
     return IgnorePointer(
       child: _StyledToastWidget(
-        duration: duration,
-        animDuration: animDuration,
-        position: position,
-        movingOnWindowChange: movingOnWindowChange,
-        animation: animation,
+        duration: duration!,
+        animDuration: animDuration!,
+        position: position!,
+        movingOnWindowChange: movingOnWindowChange!,
+        animation: animation!,
         reverseAnimation: reverseAnimation,
-        alignment: alignment,
-        axis: axis,
+        alignment: alignment as Alignment,
+        axis: axis!,
         startOffset: startOffset,
         endOffset: endOffset,
         reverseStartOffset: reverseStartOffset,
         reverseEndOffset: reverseEndOffset,
-        curve: curve,
-        reverseCurve: reverseCurve,
+        curve: curve!,
+        reverseCurve: reverseCurve!,
         key: key,
         child: Directionality(
-          textDirection: textDirection,
+          textDirection: textDirection!,
           child: Material(
             child: widget,
             color: Colors.transparent,
@@ -219,9 +219,9 @@ ToastFuture showToastWidget(
     ToastManager().dismissAll();
   }
 
-  future = ToastFuture.create(duration, entry, onDismiss, key);
+  future = ToastFuture.create(duration, entry, onDismiss!, key);
 
-  Overlay.of(context).insert(entry);
+  Overlay.of(context)!.insert(entry);
   ToastManager().addFuture(future);
 
   return future;
@@ -240,67 +240,67 @@ class StyledToast extends StatefulWidget {
   final Widget child;
 
   ///Text align
-  final TextAlign textAlign;
+  final TextAlign? textAlign;
 
   ///Text direction
-  final TextDirection textDirection;
+  final TextDirection? textDirection;
 
   ///Border radius
-  final BorderRadius borderRadius;
+  final BorderRadius? borderRadius;
 
   ///Background color
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   ///Padding for the text and the container edges
-  final EdgeInsets textPadding;
+  final EdgeInsets? textPadding;
 
   ///Text style for content
   final TextStyle textStyle;
 
   ///Shape for the container
-  final ShapeBorder shapeBorder;
+  final ShapeBorder? shapeBorder;
 
   ///Toast show duration
-  final Duration duration;
+  final Duration? duration;
 
   ///Toast animation duration
-  final Duration animDuration;
+  final Duration? animDuration;
 
   ///Position of the toast widget in current window
-  final StyledToastPosition toastPositions;
+  final StyledToastPosition? toastPositions;
 
   ///Toast animation
-  final StyledToastAnimation toastAnimation;
+  final StyledToastAnimation? toastAnimation;
 
   ///Toast reverse animation
-  final StyledToastAnimation reverseAnimation;
+  final StyledToastAnimation? reverseAnimation;
 
   ///Alignment of animation, like size, rotate animation.
-  final AlignmentGeometry alignment;
+  final AlignmentGeometry? alignment;
 
   ///Axis of animation, like size animation
-  final Axis axis;
+  final Axis? axis;
 
   ///Start offset of slide animation
-  final Offset startOffset;
+  final Offset? startOffset;
 
   ///End offset of slide animation
-  final Offset endOffset;
+  final Offset? endOffset;
 
   ///Start offset of reverse slide animation
-  final Offset reverseStartOffset;
+  final Offset? reverseStartOffset;
 
   ///End offset of reverse slide animation
-  final Offset reverseEndOffset;
+  final Offset? reverseEndOffset;
 
   ///Animation curve
-  final Curve curve;
+  final Curve? curve;
 
   ///Animation reverse curve
-  final Curve reverseCurve;
+  final Curve? reverseCurve;
 
   ///callback when toast dismissed
-  final VoidCallback onDismiss;
+  final VoidCallback? onDismiss;
 
   ///Dismiss old toast when new one shows
   final bool dismissOtherOnShow;
@@ -312,12 +312,12 @@ class StyledToast extends StatefulWidget {
   final Locale locale;
 
   ///Full width that the width of the screen minus the width of the margin.
-  final bool fullWidth;
+  final bool? fullWidth;
 
   StyledToast({
-    Key key,
-    @required this.child,
-    @required this.locale,
+    Key? key,
+    required this.child,
+    required this.locale,
     this.textAlign,
     this.textDirection,
     this.borderRadius,
@@ -439,7 +439,7 @@ class _StyledToastState extends State<StyledToast> {
           fullWidth: widget.fullWidth,
         ),
       ),
-      data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
+      data: MediaQueryData.fromWindow(WidgetsBinding.instance!.window),
     );
   }
 }
@@ -454,7 +454,7 @@ class _StyledToastState extends State<StyledToast> {
 ///
 class _StyledToastWidget extends StatefulWidget {
   ///Child widget
-  final Widget/*!*/ child;
+  final Widget child;
 
   ///Toast duration
   final Duration duration;
@@ -463,46 +463,46 @@ class _StyledToastWidget extends StatefulWidget {
   final Duration animDuration;
 
   ///Animation curve
-  final Curve/*!*/ curve;
+  final Curve curve;
 
   ///Animation reverse curve
-  final Curve/*!*/ reverseCurve;
+  final Curve reverseCurve;
 
   ///Toast position
-  final StyledToastPosition/*!*/ position;
+  final StyledToastPosition position;
 
   ///Alignment of animation, scale, rotate animation.
-  final Alignment/*!*/ alignment;
+  final Alignment alignment;
 
   ///Axis of animation, like size animation
-  final Axis/*!*/ axis;
+  final Axis axis;
 
   ///Start offset of slide animation
-  final Offset startOffset;
+  final Offset? startOffset;
 
   ///End offset of slide animation
-  final Offset endOffset;
+  final Offset? endOffset;
 
   ///Start offset of reverse slide animation
-  final Offset reverseStartOffset;
+  final Offset? reverseStartOffset;
 
   ///End offset of reverse slide animation
-  final Offset reverseEndOffset;
+  final Offset? reverseEndOffset;
 
   ///Toast animation
-  final StyledToastAnimation/*!*/ animation;
+  final StyledToastAnimation animation;
 
   ///Toast reverse animation
-  final StyledToastAnimation reverseAnimation;
+  final StyledToastAnimation? reverseAnimation;
 
   ///When window change, moving toast.
-  final bool/*!*/ movingOnWindowChange;
+  final bool movingOnWindowChange;
 
   _StyledToastWidget({
-    Key key,
-    this.child,
-    this.duration,
-    this.animDuration,
+    Key? key,
+    required this.child,
+    required this.duration,
+    required this.animDuration,
     this.curve = Curves.linear,
     this.reverseCurve = Curves.linear,
     this.position = StyledToastPosition.bottom,
@@ -528,64 +528,64 @@ class _StyledToastWidget extends StatefulWidget {
 class StyledToastWidgetState extends State<_StyledToastWidget>
     with TickerProviderStateMixin<_StyledToastWidget>, WidgetsBindingObserver {
   ///Animation controller
-  /*late*/ AnimationController _animationController;
+  late AnimationController _animationController;
 
   ///Reverse animation controller
-  /*late*/ AnimationController _reverseAnimController;
+  late AnimationController _reverseAnimController;
 
   ///Fade animation
-  Animation<double> fadeAnim;
+  late Animation<double> fadeAnim;
 
   ///Scale animation
-  Animation<double> scaleAnim;
+  late Animation<double> scaleAnim;
 
   ///Size animation
-  Animation<double> sizeAnim;
+  late Animation<double> sizeAnim;
 
   ///Slide from top animation
-  Animation<Offset> slideFromTopAnim;
+  late Animation<Offset> slideFromTopAnim;
 
   ///Slide from bottom animation
-  Animation<Offset> slideFromBottomAnim;
+  late Animation<Offset> slideFromBottomAnim;
 
   ///Slide from left animation
-  Animation<Offset> slideFromLeftAnim;
+  late Animation<Offset> slideFromLeftAnim;
 
   ///Slide from right animation
-  Animation<Offset> slideFromRightAnim;
+  late Animation<Offset> slideFromRightAnim;
 
   ///Fade scale animation
-  Animation<double> fadeScaleAnim;
+  Animation<double>? fadeScaleAnim;
 
   ///Rotate animation
-  Animation<double> rotateAnim;
+  late Animation<double> rotateAnim;
 
   ///Fade animation reverse
-  Animation<double> fadeAnimReverse;
+  late Animation<double> fadeAnimReverse;
 
   ///Scale animation reverse
-  Animation<double> scaleAnimReverse;
+  late Animation<double> scaleAnimReverse;
 
   ///Size animation reverse
-  Animation<double> sizeAnimReverse;
+  late Animation<double> sizeAnimReverse;
 
   ///Slide from top animation reverse
-  Animation<Offset> slideToTopAnimReverse;
+  late Animation<Offset> slideToTopAnimReverse;
 
   ///Slide from bottom animation reverse
-  Animation<Offset> slideToBottomAnimReverse;
+  late Animation<Offset> slideToBottomAnimReverse;
 
   ///Slide from left animation reverse
-  Animation<Offset> slideToLeftAnimReverse;
+  late Animation<Offset> slideToLeftAnimReverse;
 
   ///Slide from right animation reverse
-  Animation<Offset> slideToRightAnimReverse;
+  late Animation<Offset> slideToRightAnimReverse;
 
   ///Fade scale animation reverse
-  Animation<double> fadeScaleAnimReverse;
+  Animation<double>? fadeScaleAnimReverse;
 
   ///Rotate animation reverse
-  Animation<double> rotateAnimReverse;
+  late Animation<double> rotateAnimReverse;
 
   double opacity = 1.0;
 
@@ -597,7 +597,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
 
   /// A [Timer] needed to dismiss the toast with animation
   /// after the given [duration] of time.
-  /*late*/ Timer _toastTimer;
+  late Timer _toastTimer;
 
   @override
   void initState() {
@@ -1213,7 +1213,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   }
 
   ///Create animation widget
-  Widget/*!*/ createAnimWidget(Widget/*!*/ w) {
+  Widget createAnimWidget(Widget w) {
     switch (widget.animation) {
       case StyledToastAnimation.fade:
         w = FadeTransition(

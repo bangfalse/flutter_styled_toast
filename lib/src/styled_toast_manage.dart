@@ -17,7 +17,7 @@ class ToastFuture {
   final GlobalKey<StyledToastWidgetState> _containerKey;
 
   /// A [Timer] used to dismiss this toast future after the given period of time.
-  Timer _timer;
+  late Timer _timer;
 
   ToastFuture.create(
     Duration duration,
@@ -48,11 +48,11 @@ class ToastFuture {
 class ToastManager {
   ToastManager._();
 
-  static ToastManager _instance;
+  static ToastManager? _instance;
 
   factory ToastManager() {
     _instance ??= ToastManager._();
-    return _instance;
+    return _instance!;
   }
 
   Set<ToastFuture> toastSet = Set();
