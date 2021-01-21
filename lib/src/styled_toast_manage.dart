@@ -36,7 +36,7 @@ class ToastFuture {
 
     _isShow = false;
     _timer.cancel();
-    _onDismiss?.call();
+    _onDismiss.call();
     ToastManager().removeFuture(this);
 
     _containerKey.currentState?.dismissToast();

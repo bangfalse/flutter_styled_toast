@@ -97,7 +97,8 @@ class _IconToastWidgetState extends State<IconToastWidget>
                     Text(
                       widget.message ?? '',
                       style: TextStyle(
-                          fontSize: Theme.of(context).textTheme.title.fontSize,
+                          fontSize:
+                              Theme.of(context).textTheme.headline6.fontSize,
                           color: Colors.white),
                       softWrap: true,
                       maxLines: 200,
@@ -172,7 +173,7 @@ class BannerToastWidget extends StatelessWidget {
           Text(
             message ?? '',
             style: TextStyle(
-                fontSize: Theme.of(context).textTheme.title.fontSize,
+                fontSize: Theme.of(context).textTheme.headline6.fontSize,
                 color: Colors.white),
           ),
     );

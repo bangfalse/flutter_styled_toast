@@ -85,9 +85,9 @@ ToastFuture showToast(
   fullWidth ??= _toastTheme?.fullWidth ?? false;
 
   Widget widget = Container(
-    margin: EdgeInsets.symmetric(horizontal: toastHorizontalMargin ?? 50.0),
+    margin: EdgeInsets.symmetric(horizontal: toastHorizontalMargin),
     width: fullWidth
-        ? MediaQuery.of(context).size.width - (toastHorizontalMargin ?? 50.0)
+        ? MediaQuery.of(context).size.width - (toastHorizontalMargin)
         : null,
     decoration: ShapeDecoration(
       color: backgroundColor,
@@ -95,7 +95,7 @@ ToastFuture showToast(
     ),
     padding: textPadding,
     child: Text(
-      msg ?? '',
+      msg,
       style: textStyle,
       textAlign: textAlign,
     ),
@@ -213,7 +213,6 @@ ToastFuture showToastWidget(
     );
   });
 
-  dismissOtherToast ??= _toastTheme?.dismissOtherOnShow ?? false;
 
   if (dismissOtherToast == true) {
     ToastManager().dismissAll();
@@ -383,12 +382,7 @@ class _StyledToastState extends State<StyledToast> {
           ],
         ));
 
-    TextStyle textStyle = widget.textStyle ??
-        TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.normal,
-          color: Colors.white,
-        );
+    TextStyle textStyle = widget.textStyle;
 
     Color backgroundColor = widget.backgroundColor ?? const Color(0x99000000);
 
@@ -410,7 +404,7 @@ class _StyledToastState extends State<StyledToast> {
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        locale: widget.locale ?? const Locale('en', 'US'),
+        locale: widget.locale,
         child: StyledToastTheme(
           child: wrapper,
           textAlign: textAlign,
@@ -1284,9 +1278,9 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
       case StyledToastAnimation.size:
         w = CustomSizeTransition(
           sizeFactor: sizeAnim,
-          alignment: positionAlignment ?? Alignment.center,
+          alignment: positionAlignment,
           axisAlignment: 0.0,
-          axis: widget.axis ?? Axis.horizontal,
+          axis: widget.axis,
           child: w,
         );
         break;
@@ -1294,8 +1288,8 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
         w = CustomSizeTransition(
           sizeFactor: sizeAnim,
           axisAlignment: 0.0,
-          alignment: positionAlignment ?? Alignment.center,
-          axis: widget.axis ?? Axis.horizontal,
+          alignment: positionAlignment,
+          axis: widget.axis,
           child: FadeTransition(
             opacity: fadeAnim,
             child: w,
@@ -1431,8 +1425,8 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
           break;
         case StyledToastAnimation.size:
           w = CustomSizeTransition(
-            alignment: positionAlignment ?? Alignment.center,
-            axis: widget.axis ?? Axis.horizontal,
+            alignment: positionAlignment,
+            axis: widget.axis,
             sizeFactor: sizeAnimReverse,
             child: w,
           );
@@ -1441,8 +1435,8 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
           w = FadeTransition(
             opacity: fadeAnimReverse,
             child: CustomSizeTransition(
-              alignment: positionAlignment ?? Alignment.center,
-              axis: widget.axis ?? Axis.horizontal,
+              alignment: positionAlignment,
+              axis: widget.axis,
               sizeFactor: sizeAnimReverse,
               child: w,
             ),
@@ -1504,7 +1498,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
 
   ///Dismiss toast
   void dismissToast() {
-    _toastTimer?.cancel();
+    _toastTimer.cancel();
     setState(() {
       opacity = 0.0;
     });
@@ -1517,7 +1511,6 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     }
     try {
       if (widget.reverseAnimation != null &&
-          _reverseAnimController != null &&
           widget.animation != widget.reverseAnimation) {
         await _reverseAnimController.forward().orCancel;
       } else {
@@ -1528,12 +1521,10 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
 
   @override
   void dispose() {
-    _toastTimer?.cancel();
+    _toastTimer.cancel();
     WidgetsBinding.instance?.removeObserver(this);
-    if (_animationController != null) {
-      _animationController.dispose();
-    }
-    if (widget.reverseAnimation != null && _reverseAnimController != null) {
+    _animationController.dispose();
+    if (widget.reverseAnimation != null) {
       _reverseAnimController.dispose();
     }
     super.dispose();
