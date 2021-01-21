@@ -12,7 +12,7 @@ void dismissAllToast({bool showAnim = false}) {
 /// When the Toast is dismissed, call [onDismiss] if specified;
 class ToastFuture {
   final OverlayEntry _entry;
-  final VoidCallback _onDismiss;
+  final VoidCallback? _onDismiss;
   bool _isShow = true;
   final GlobalKey<StyledToastWidgetState> _containerKey;
 
@@ -36,7 +36,7 @@ class ToastFuture {
 
     _isShow = false;
     _timer.cancel();
-    _onDismiss.call();
+    _onDismiss?.call();
     ToastManager().removeFuture(this);
 
     _containerKey.currentState?.dismissToast();
